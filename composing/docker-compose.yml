@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  server:
+    image: nginx:latest
+    ports:
+    - "9971:80"
+    links:
+    - php-fpm
+    volumes:
+    - C:\Users\Anshum\Desktop\composing\conf:/etc/nginx/conf.d
+    - C:\Users\Anshum\Desktop\composing\code:/var/www/html
+
+
+  php-fpm:
+    image: php:8-fpm
+    volumes:
+    - C:\Users\Anshum\Desktop\composing\code:/var/www/html
+
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: mysql2023
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+    - "8083:80"
+    links:
+    - db:db
+
+
+
+
+
