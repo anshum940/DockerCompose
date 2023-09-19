@@ -12,11 +12,11 @@ pipeline {
             steps {
                 script {
                    '''
-                    & docker-compose -t build .
+                    & docker compose -t build .
                     '''
                     
                     '''
-                    & docker-compose up -d
+                    & docker compose up -d
                     '''
                 }
             }
