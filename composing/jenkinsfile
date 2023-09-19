@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your GitHub repository
+                checkout scm
+            }
+        }
+        
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    // Use 'docker-compose.exe' for Docker Compose on Windows
+                    bat '"C:\\Program Files\\Docker\\docker-compose.exe" build'
+                    
+                    // Deploy your LEMP stack using the docker-compose file
+                    bat '"C:\\Program Files\\Docker\\docker-compose.exe" up -d'
+                }
+            }
+        }
+    }
+}
