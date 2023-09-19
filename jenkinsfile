@@ -12,11 +12,11 @@ pipeline {
             steps {
                 script {
                    '''
-                    & "C:\Program Files\Docker\Docker\resources\bin\docker-compose.exe" build
+                    & docker-compose -t build .
                     '''
                     
                     '''
-                    & "C:\Program Files\Docker\Docker\resources\bin\docker-compose.exe" up -d
+                    & docker-compose up -d
                     '''
                 }
             }
