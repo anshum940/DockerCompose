@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your GitHub repository
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    // Build your Docker Compose services
+                    bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker-compose.exe" build'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run your tests here using Windows batch commands
+                    // For example, you can use a testing framework or custom scripts
+                    bat 'echo Running tests...'
+                    bat 'REM Add your testing commands here'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy your LEMP stack using the docker-compose file
+                    bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker-compose.exe" up -d'
+                }
+            }
+        }
+
+        stage('Release') {
+            steps {
+                script {
+                    // Implement release actions using Windows batch commands
+                    // This stage can include actions like notifying stakeholders,
+                    // tagging a release in your repository, etc.
+                    bat 'echo Performing release actions...'
+                    bat 'REM Add your release actions here'
+                }
+            }
+        }
+    }
+}
