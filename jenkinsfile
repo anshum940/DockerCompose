@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Checkout your Git repository
                 checkout scm
             }
         }
@@ -11,13 +12,8 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 script {
-                   '''
-                    & docker compose -t build .
-                    '''
-                    
-                    '''
-                    & docker compose up -d
-                    '''
+                    // Build Docker images and start containers using docker-compose
+                    sh 'docker-compose up -d --build'
                 }
             }
         }
