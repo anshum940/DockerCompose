@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker images and start containers using docker-compose
-                    sh 'docker-compose up -d --build'
+                     docker-compose up -d --build
                 }
             }
         }
