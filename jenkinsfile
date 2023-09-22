@@ -1,20 +1,20 @@
 pipeline {
+    agent any
+    
     stages {
-        stage('Install Docker and Docker Compose') {
+        stage('Checkout') {
             steps {
-                sh 'curl -fsSL https://get.docker.com -o get-docker.sh' // Download Docker installation script
-                sh 'sh get-docker.sh' // Run the installation script
-                sh 'docker --version' // Verify Docker installation
-                
-                sh 'curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose' // Download Docker Compose
-                sh 'chmod +x /usr/local/bin/docker-compose' // Make Docker Compose executable
-                sh 'docker-compose --version' // Verify Docker Compose installation
+                // Checkout your Git repository
+                checkout scm
             }
         }
         
         stage('Build and Deploy') {
             steps {
-                sh 'docker-compose up -d' // Deploy your application using Docker Compose in detached mode
+                script {
+                    // docker-compose
+                  sh  'docker-compose up -d'
+                }
             }
         }
     }
