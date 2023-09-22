@@ -16,7 +16,7 @@ pipeline {
 		  sh 'docker ps '
 		  sh 'ls -la '
 		  sh 'pwd'
-                  sh  'docker-compose up -d'
+                  sh  'docker-compose -f composing/docker-compose.yml  up -d'
                 }
             }
         }
