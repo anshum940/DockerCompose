@@ -6,12 +6,11 @@ pipeline {
             steps {
                 // Install Docker and Docker Compose
                 script {
-                    sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-                    sh 'sh get-docker.sh'
-                    sh 'rm get-docker.sh'
-                    sh 'sudo usermod -aG docker jenkins' // Add Jenkins user to the docker group
-                    sh 'sudo systemctl enable docker'
-                    sh 'sudo systemctl start docker'
+                    sh 'apt-get update -qq \ && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common'
+                    sh 'curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -'
+                    sh 'add-apt-repository \ "deb [arch=amd64] https://download.docker.com/linux/debian \ $(lsb_release -cs) \ stable"'
+                    sh 'apt-get update  -qq \ && apt-get -y install docker-ce'
+                    sh 'usermod -aG docker jenkins'
 
                     // Install Docker Compose
                     sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
