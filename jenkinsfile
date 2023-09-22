@@ -13,6 +13,9 @@ pipeline {
             steps {
                 script {
                     // docker-compose
+		  sh 'docker ps '
+		  sh 'ls -la '
+		  sh 'pwd'
                   sh  'docker-compose up -d'
                 }
             }
