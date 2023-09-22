@@ -1,29 +1,20 @@
 pipeline {
-    agent any
-
     stages {
-        stage('Setup Docker and Docker Compose') {
+        stage('Install Docker and Docker Compose') {
             steps {
-                // Install Docker and Docker Compose
-                script {
-                    sh 'apt-get update -qq \ && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common'
-                    sh 'curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -'
-                    sh 'add-apt-repository \ "deb [arch=amd64] https://download.docker.com/linux/debian \ $(lsb_release -cs) \ stable"'
-                    sh 'apt-get update  -qq \ && apt-get -y install docker-ce'
-                    sh 'usermod -aG docker jenkins'
-
-                    // Install Docker Compose
-                    sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                    sh 'chmod +x /usr/local/bin/docker-compose'
-                    sh 'docker-compose --version'
-                }
+                sh 'curl -fsSL https://get.docker.com -o get-docker.sh' // Download Docker installation script
+                sh 'sh get-docker.sh' // Run the installation script
+                sh 'docker --version' // Verify Docker installation
+                
+                sh 'curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose' // Download Docker Compose
+                sh 'chmod +x /usr/local/bin/docker-compose' // Make Docker Compose executable
+                sh 'docker-compose --version' // Verify Docker Compose installation
             }
         }
-
+        
         stage('Build and Deploy') {
             steps {
-                // Run docker-compose up
-                sh 'docker-compose up -d'
+                sh 'docker-compose up -d' // Deploy your application using Docker Compose in detached mode
             }
         }
     }
